@@ -1,12 +1,12 @@
 package com.almostreliable.kubeio.enderio.conduit;
 
 import com.enderio.EnderIO;
-import com.enderio.api.conduit.IClientConduitData;
+import com.enderio.api.conduit.ClientConduitData;
 import com.enderio.api.misc.Vector2i;
-import com.enderio.conduits.common.types.EnergyExtendedData;
+import com.enderio.conduits.common.types.energy.EnergyExtendedData;
 import net.minecraft.resources.ResourceLocation;
 
-public class CustomEnergyClientData extends IClientConduitData.Simple<EnergyExtendedData> {
+public class CustomEnergyClientData extends ClientConduitData.Simple<EnergyExtendedData> {
 
     private static final int SIZE = 64;
 

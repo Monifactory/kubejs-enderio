@@ -1,14 +1,14 @@
 package com.almostreliable.kubeio.enderio.conduit;
 
-import com.enderio.api.conduit.IConduitMenuData;
-import com.enderio.api.conduit.IConduitType;
+import com.enderio.api.conduit.ConduitMenuData ;
+import com.enderio.api.conduit.ConduitType;
 import com.enderio.api.conduit.TieredConduit;
-import com.enderio.api.conduit.ticker.IConduitTicker;
+import com.enderio.api.conduit.ticker.ConduitTicker;
 import com.enderio.api.misc.RedstoneControl;
 import com.enderio.api.misc.Vector2i;
-import com.enderio.conduits.common.init.EnderConduitTypes;
-import com.enderio.conduits.common.types.EnergyConduitType;
-import com.enderio.conduits.common.types.EnergyExtendedData;
+import com.enderio.conduits.common.init.ConduitTypes;
+import com.enderio.conduits.common.types.energy.EnergyConduitType;
+import com.enderio.conduits.common.types.energy.EnergyExtendedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -26,20 +26,20 @@ public class CustomEnergyConduitType extends TieredConduit<EnergyExtendedData> {
             texture,
             new ResourceLocation("forge:energy"),
             transferRate,
-            EnderConduitTypes.ICON_TEXTURE,
+            ConduitTypes.ICON_TEXTURE,
             new Vector2i(0, 24)
         );
         this.clientConduitData = new CustomEnergyClientData(texture);
     }
 
     @Override
-    public IConduitTicker getTicker() {
+    public ConduitTicker getTicker() {
         return new CustomEnergyConduitTicker(getTier());
     }
 
     @Override
-    public IConduitMenuData getMenuData() {
-        return IConduitMenuData.ENERGY;
+    public ConduitMenuData  getMenuData() {
+        return ConduitMenuData .ENERGY;
     }
 
     @Override
@@ -62,13 +62,13 @@ public class CustomEnergyConduitType extends TieredConduit<EnergyExtendedData> {
     }
 
     @Override
-    public boolean canBeReplacedBy(IConduitType<?> other) {
+    public boolean canBeReplacedBy(ConduitType<?> other) {
         // allow replacing with simple energy conduit as it's infinite
         return other instanceof EnergyConduitType || super.canBeReplacedBy(other);
     }
 
     @Override
-    public boolean canBeInSameBlock(IConduitType<?> other) {
+    public boolean canBeInSameBlock(ConduitType<?> other) {
         // don't allow simple energy conduit to be in the same block as custom energy conduits
         return !(other instanceof EnergyConduitType) && super.canBeInSameBlock(other);
     }

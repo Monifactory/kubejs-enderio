@@ -1,9 +1,9 @@
 package com.almostreliable.kubeio.enderio.conduit;
 
-import com.enderio.api.conduit.IConduitType;
+import com.enderio.api.conduit.ConduitType;
 import com.enderio.api.misc.ColorControl;
-import com.enderio.conduits.common.types.EnergyConduitTicker;
-import com.enderio.conduits.common.types.EnergyExtendedData;
+import com.enderio.conduits.common.types.energy.EnergyConduitTicker;
+import com.enderio.conduits.common.types.energy.EnergyExtendedData;
 import dev.gigaherz.graph3.Graph;
 import dev.gigaherz.graph3.Mergeable;
 import net.minecraft.core.BlockPos;
@@ -23,7 +23,7 @@ public class CustomEnergyConduitTicker extends EnergyConduitTicker {
 
     @Override
     public void tickCapabilityGraph(
-        IConduitType<?> type, List<CapabilityConnection> inserts, List<CapabilityConnection> extracts,
+        ConduitType<?> type, List<CapabilityConnection> inserts, List<CapabilityConnection> extracts,
         ServerLevel level,
         Graph<Mergeable.Dummy> graph, TriFunction<ServerLevel, BlockPos, ColorControl, Boolean> isRedstoneActive
     ) {

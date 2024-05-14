@@ -53,7 +53,9 @@ repositories {
     maven("https://maven.latvian.dev/releases") // KubeJS
     maven("https://maven.rover656.dev/releases") // EnderIO
     maven("https://maven.tterrag.com") // Registrate for EnderIO
+    maven ( "https://cursemaven.com" ) // Cursemaven
     maven("http://dogforce-games.com/maven") {
+
         isAllowInsecureProtocol = true
     } // GraphLib for EnderIO
     maven("https://maven.blamejared.com") // JEI
@@ -76,7 +78,7 @@ dependencies {
     localRuntime("io.github.llamalad7:mixinextras-forge:0.2.0-rc.4")
 
     // EnderIO
-    modImplementation("com.enderio:EnderIO:$minecraftVersion-$eioVersion")
+    modImplementation("curse.maven:enderiou-1017801:5344215-sources-5344242-api-5344245")
     modImplementation("dev.gigaherz.graph:GraphLib3:3.0.4")
     modImplementation("com.tterrag.registrate:Registrate:MC1.20-1.3.11")
 
