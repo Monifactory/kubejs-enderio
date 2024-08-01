@@ -4,13 +4,13 @@ import com.almostreliable.kubeio.enderio.conduit.CustomConduitEntry;
 import com.almostreliable.kubeio.enderio.conduit.CustomEnergyConduitType;
 import com.enderio.EnderIO;
 import com.enderio.api.conduit.ConduitItemFactory;
-import com.enderio.api.conduit.ConduitRegistries;
-import com.enderio.conduits.common.init.ConduitTypes;
+import com.enderio.conduits.common.init.EIOConduitTypes;
 import com.google.common.base.Preconditions;
 import dev.latvian.mods.kubejs.event.EventJS;
 import dev.latvian.mods.rhino.util.HideFromJS;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,11 +28,15 @@ public class ConduitRegistryEvent extends EventJS {
             "id must be unique"
         );
 
-        var type = ConduitRegistries.CONDUIT_TYPES.register(id, () -> new CustomEnergyConduitType(
-            EnderIO.loc("block/conduit/" + id),
-            transferRate
-        ));
+        RegistryObject<CustomEnergyConduitType> type = EIOConduitTypes.CONDUIT_TYPES.register(id,
+            () ->
+            new CustomEnergyConduitType(EnderIO.loc("block/conduit/" + id), transferRate));
 
+        // ConduitApi.INSTANCE.getConduitTypeRegistry()
+        // .register(id, new CustomEnergyConduitType(
+        // EnderIO.loc("block/conduit/" + id),
+        // transferRate)
+        // );
         Item item = ConduitItemFactory.build(type, new Item.Properties());
         ForgeRegistries.ITEMS.register(EnderIO.loc(id), item);
 

@@ -78,7 +78,7 @@ dependencies {
     localRuntime("io.github.llamalad7:mixinextras-forge:0.2.0-rc.4")
 
     // EnderIO
-    modImplementation("curse.maven:enderiou-1017801:5344215-sources-5344242-api-5344245")
+    modImplementation("com.enderio:EnderIO:$minecraftVersion-$eioVersion")
     modImplementation("dev.gigaherz.graph:GraphLib3:3.0.4")
     modImplementation("com.tterrag.registrate:Registrate:MC1.20-1.3.11")
 
