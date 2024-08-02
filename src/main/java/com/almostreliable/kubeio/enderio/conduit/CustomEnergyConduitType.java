@@ -1,3 +1,4 @@
+
 package com.almostreliable.kubeio.enderio.conduit;
 
 import com.enderio.api.conduit.ConduitMenuData ;
@@ -5,8 +6,6 @@ import com.enderio.api.conduit.ConduitType;
 import com.enderio.api.conduit.TieredConduit;
 import com.enderio.api.conduit.ticker.ConduitTicker;
 import com.enderio.api.misc.RedstoneControl;
-import com.enderio.conduits.common.conduit.type.energy.EnergyConduitData;
-import com.enderio.conduits.common.conduit.type.energy.EnergyConduitTicker;
 import com.enderio.conduits.common.conduit.type.energy.EnergyConduitType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,30 +16,30 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class CustomEnergyConduitType extends TieredConduit<EnergyConduitData> {
+public class CustomEnergyConduitType extends TieredConduit<CustomEnergyConduitData> {
 
     private final int transferRate;
-    private final ConduitTicker ticker;
+    private final ConduitTicker<CustomEnergyConduitData> ticker;
     @SuppressWarnings("AssignmentToSuperclassField")
     public CustomEnergyConduitType(ResourceLocation tierName, int transferRate) {
         super(new ResourceLocation("forge:energy"), tierName, transferRate);
         this.transferRate = transferRate;
-        this.ticker = new EnergyConduitTicker();
+        this.ticker = new CustomEnergyConduitTicker(transferRate);
     }
 
     @Override
-    public ConduitTicker getTicker() {
+    public ConduitTicker<CustomEnergyConduitData> getTicker() {
         return this.ticker;
     }
 
     @Override
     public ConduitMenuData  getMenuData() {
-        return ConduitMenuData .ENERGY;
+        return ConduitMenuData.ENERGY;
     }
 
     @Override
-    public EnergyConduitData createConduitData(Level level, BlockPos pos) {
-        return new EnergyConduitData();
+    public CustomEnergyConduitData createConduitData(Level level, BlockPos pos) {
+        return new CustomEnergyConduitData(this.transferRate);
     }
 
     @Override
