@@ -1,3 +1,4 @@
+
 package com.almostreliable.kubeio.enderio.conduit;
 
 import com.enderio.api.conduit.ConduitMenuData ;
@@ -5,10 +6,7 @@ import com.enderio.api.conduit.ConduitType;
 import com.enderio.api.conduit.TieredConduit;
 import com.enderio.api.conduit.ticker.ConduitTicker;
 import com.enderio.api.misc.RedstoneControl;
-import com.enderio.api.misc.Vector2i;
-import com.enderio.conduits.common.init.ConduitTypes;
-import com.enderio.conduits.common.types.energy.EnergyConduitType;
-import com.enderio.conduits.common.types.energy.EnergyExtendedData;
+import com.enderio.conduits.common.conduit.type.energy.EnergyConduitType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -18,33 +16,30 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class CustomEnergyConduitType extends TieredConduit<EnergyExtendedData> {
+public class CustomEnergyConduitType extends TieredConduit<CustomEnergyConduitData> {
 
+    private final int transferRate;
+    private final ConduitTicker<CustomEnergyConduitData> ticker;
     @SuppressWarnings("AssignmentToSuperclassField")
-    public CustomEnergyConduitType(ResourceLocation texture, int transferRate) {
-        super(
-            texture,
-            new ResourceLocation("forge:energy"),
-            transferRate,
-            ConduitTypes.ICON_TEXTURE,
-            new Vector2i(0, 24)
-        );
-        this.clientConduitData = new CustomEnergyClientData(texture);
+    public CustomEnergyConduitType(ResourceLocation tierName, int transferRate) {
+        super(new ResourceLocation("forge:energy"), tierName, transferRate);
+        this.transferRate = transferRate;
+        this.ticker = new CustomEnergyConduitTicker(transferRate);
     }
 
     @Override
-    public ConduitTicker getTicker() {
-        return new CustomEnergyConduitTicker(getTier());
+    public ConduitTicker<CustomEnergyConduitData> getTicker() {
+        return this.ticker;
     }
 
     @Override
     public ConduitMenuData  getMenuData() {
-        return ConduitMenuData .ENERGY;
+        return ConduitMenuData.ENERGY;
     }
 
     @Override
-    public EnergyExtendedData createExtendedConduitData(Level level, BlockPos pos) {
-        return new EnergyExtendedData();
+    public CustomEnergyConduitData createConduitData(Level level, BlockPos pos) {
+        return new CustomEnergyConduitData(this.transferRate);
     }
 
     @Override
