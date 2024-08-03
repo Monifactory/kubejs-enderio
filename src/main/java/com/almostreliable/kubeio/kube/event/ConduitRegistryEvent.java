@@ -30,7 +30,8 @@ public class ConduitRegistryEvent extends EventJS {
 
         RegistryObject<CustomEnergyConduitType> type = EIOConduitTypes.CONDUIT_TYPES.register(id,
             () ->
-            new CustomEnergyConduitType(EnderIO.loc("block/conduit/" + id), transferRate));
+            new CustomEnergyConduitType(EnderIO.loc("block/conduit/" + id), EnderIO.loc(id),
+                transferRate));
 
         // ConduitApi.INSTANCE.getConduitTypeRegistry()
         // .register(id, new CustomEnergyConduitType(
@@ -40,6 +41,6 @@ public class ConduitRegistryEvent extends EventJS {
         Item item = ConduitItemFactory.build(type, new Item.Properties());
         ForgeRegistries.ITEMS.register(EnderIO.loc(id), item);
 
-        CONDUITS.add(new CustomConduitEntry(id, name, item));
+        CONDUITS.add(new CustomConduitEntry(id, name, transferRate, item));
     }
 }
