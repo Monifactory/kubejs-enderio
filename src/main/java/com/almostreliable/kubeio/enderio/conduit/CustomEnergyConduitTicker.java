@@ -46,7 +46,6 @@ public class CustomEnergyConduitTicker
                 continue;
             }
 
-            int previousStored = energy.getEnergyStored();
             for (ConduitNode<?> otherNode : loadedNodes)
             {
                 for (Direction dir : Direction.values())

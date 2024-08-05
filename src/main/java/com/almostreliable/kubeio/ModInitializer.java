@@ -1,7 +1,6 @@
 package com.almostreliable.kubeio;
 
 import com.almostreliable.kubeio.enderio.EnderIOIntegration;
-import com.almostreliable.kubeio.enderio.conduit.CustomConduitEntry;
 import com.almostreliable.kubeio.kube.KubePlugin;
 import com.almostreliable.kubeio.kube.event.ConduitRegistryEvent;
 import com.almostreliable.kubeio.util.SmeltingFilterSynchronizer;
@@ -53,8 +52,8 @@ public final class ModInitializer {
     private static void onTabContents(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() != EIOCreativeTabs.CONDUITS) return;
 
-        for (CustomConduitEntry conduit : ConduitRegistryEvent.CONDUITS) {
-            event.accept(conduit.item());
-        }
+        ConduitRegistryEvent.CONDUITS.stream()
+            .sorted((one, two) -> one.transferRate() - two.transferRate())
+            .forEach(entry -> event.accept(entry.item()));
     }
 }

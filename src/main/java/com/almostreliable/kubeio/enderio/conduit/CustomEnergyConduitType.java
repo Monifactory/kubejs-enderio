@@ -10,20 +10,24 @@ import com.enderio.conduits.common.conduit.type.energy.EnergyConduitType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Objects;
 
 public class CustomEnergyConduitType extends TieredConduit<CustomEnergyConduitData> {
 
-    private final int transferRate;
+    private final ResourceLocation id;
     private final ConduitTicker<CustomEnergyConduitData> ticker;
-    @SuppressWarnings("AssignmentToSuperclassField")
-    public CustomEnergyConduitType(ResourceLocation tierName, int transferRate) {
+    public CustomEnergyConduitType(ResourceLocation tierName, ResourceLocation id,
+        int transferRate) {
         super(new ResourceLocation("forge:energy"), tierName, transferRate);
-        this.transferRate = transferRate;
+        this.id = id;
         this.ticker = new CustomEnergyConduitTicker(transferRate);
     }
 
@@ -39,7 +43,7 @@ public class CustomEnergyConduitType extends TieredConduit<CustomEnergyConduitDa
 
     @Override
     public CustomEnergyConduitData createConduitData(Level level, BlockPos pos) {
-        return new CustomEnergyConduitData(this.transferRate);
+        return new CustomEnergyConduitData(this.getTier());
     }
 
     @Override
@@ -66,5 +70,10 @@ public class CustomEnergyConduitType extends TieredConduit<CustomEnergyConduitDa
     public boolean canBeInSameBlock(ConduitType<?> other) {
         // don't allow simple energy conduit to be in the same block as custom energy conduits
         return !(other instanceof EnergyConduitType) && super.canBeInSameBlock(other);
+    }
+
+    @Override
+    public Item getConduitItem() {
+        return Objects.requireNonNull(ForgeRegistries.ITEMS.getValue(id));
     }
 }
