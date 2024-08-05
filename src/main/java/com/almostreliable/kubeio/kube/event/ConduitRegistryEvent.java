@@ -8,6 +8,7 @@ import com.enderio.conduits.common.init.EIOConduitTypes;
 import com.google.common.base.Preconditions;
 import dev.latvian.mods.kubejs.event.EventJS;
 import dev.latvian.mods.rhino.util.HideFromJS;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -28,9 +29,10 @@ public class ConduitRegistryEvent extends EventJS {
             "id must be unique"
         );
 
+        ResourceLocation itemId = EnderIO.loc(id);
         RegistryObject<CustomEnergyConduitType> type = EIOConduitTypes.CONDUIT_TYPES.register(id,
             () ->
-            new CustomEnergyConduitType(EnderIO.loc("block/conduit/" + id), EnderIO.loc(id),
+            new CustomEnergyConduitType(EnderIO.loc("block/conduit/" + id), itemId,
                 transferRate));
 
         // ConduitApi.INSTANCE.getConduitTypeRegistry()
@@ -39,7 +41,7 @@ public class ConduitRegistryEvent extends EventJS {
         // transferRate)
         // );
         Item item = ConduitItemFactory.build(type, new Item.Properties());
-        ForgeRegistries.ITEMS.register(EnderIO.loc(id), item);
+        ForgeRegistries.ITEMS.register(itemId, item);
 
         CONDUITS.add(new CustomConduitEntry(id, name, transferRate, item));
     }
